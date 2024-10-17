@@ -65,6 +65,10 @@
 #define E0_DIAG_PIN                         PC2   // E0DET
 #define E1_DIAG_PIN                         PA0   // E1DET
 
+// Additional 2 axes of limit switches for 5-axis rig
+#define I_MIN_PIN                           E0_DIAG_PIN
+#define J_MIN_PIN                           E1_DIAG_PIN
+
 //
 // Limit Switches
 //
