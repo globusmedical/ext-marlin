@@ -1810,8 +1810,8 @@
 #define INVERT_X_DIR true
 #define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
-#define INVERT_I_DIR false
-#define INVERT_J_DIR false
+#define INVERT_I_DIR true
+#define INVERT_J_DIR true
 //#define INVERT_K_DIR false
 //#define INVERT_U_DIR false
 //#define INVERT_V_DIR false
@@ -1854,7 +1854,7 @@
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
-#define I_HOME_DIR -1
+#define I_HOME_DIR 1
 #define J_HOME_DIR -1
 //#define K_HOME_DIR -1
 //#define U_HOME_DIR -1
@@ -1889,10 +1889,10 @@
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 250
-#define I_MIN_POS 0
-#define I_MAX_POS 90
-#define J_MIN_POS 0
-#define J_MAX_POS 90
+#define I_MIN_POS -45
+#define I_MAX_POS 45
+#define J_MIN_POS -45
+#define J_MAX_POS 45
 //#define K_MIN_POS 0
 //#define K_MAX_POS 50
 //#define U_MIN_POS 0
@@ -2340,7 +2340,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60), (50*60), (50*60) }
+#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (50*60), (50*60), (50*60) }
 
 // Edit homing feedrates with M210 and MarlinUI menu items
 //#define EDITABLE_HOMING_FEEDRATE
@@ -3471,11 +3471,11 @@
 //
 // Ender-3 v2 OEM display. A DWIN display with Rotary Encoder.
 //
-#define DWIN_CREALITY_LCD           // Creality UI
+//#define DWIN_CREALITY_LCD           // Creality UI
 #define NO_CONTROLLER_CUSTOM_WIRING_WARNING
 //#define DWIN_LCD_PROUI              // Pro UI by MRiscoC
 //#define DWIN_CREALITY_LCD_JYERSUI   // Jyers UI by Jacob Myers
-//#define DWIN_MARLINUI_PORTRAIT      // MarlinUI (portrait orientation)
+#define DWIN_MARLINUI_PORTRAIT      // MarlinUI (portrait orientation)
 //#define DWIN_MARLINUI_LANDSCAPE     // MarlinUI (landscape orientation)
 
 //

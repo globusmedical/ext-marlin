@@ -71,8 +71,12 @@ bool old_is_printing;
 void _draw_axis_value(const AxisEnum axis, const char *value, const bool blink, const uint16_t x, const uint16_t y) {
   const bool x_redraw = !ui.did_first_redraw || old_is_printing != print_job_timer.isRunning();
   if (x_redraw) {
-    dwin_string.set('X' + axis);
-    dwinDrawString(true, font16x32, COLOR_ICONBLUE, COLOR_BG_BLACK,
+    if(axis < 3)
+      dwin_string.set('X' + axis);
+    else
+      dwin_string.set('A' - 3 + axis);
+
+    dwinDrawString(true, font14x28, COLOR_ICONBLUE, COLOR_BG_BLACK,
       #if ENABLED(DWIN_MARLINUI_PORTRAIT)
         x + (utf8_strlen(value) * 14 - 14) / 2, y + 2
       #else
@@ -96,7 +100,7 @@ void _draw_axis_value(const AxisEnum axis, const char *value, const bool blink, 
   if (TERN0(LCD_SHOW_E_TOTAL, x_redraw && axis == X_AXIS))
     dwin_string.add(F("   "));
 
-  dwinDrawString(true, font14x28, COLOR_WHITE, COLOR_BG_BLACK,
+  dwinDrawString(true, font8x16, COLOR_WHITE, COLOR_BG_BLACK,
     #if ENABLED(DWIN_MARLINUI_PORTRAIT)
       x, y + 32
     #else
@@ -315,10 +319,14 @@ void MarlinUI::draw_status_screen() {
     TERN_(LCD_SHOW_E_TOTAL, _draw_e_value(e_move_accumulator, TERN(DWIN_MARLINUI_PORTRAIT, 6, 75), cpy));
   }
   else {
-    TERN_(HAS_X_AXIS, _draw_axis_value(X_AXIS, ftostr4sign(lpos.x), blink, TERN(DWIN_MARLINUI_PORTRAIT,  6,  75), cpy));
-    TERN_(HAS_Y_AXIS, _draw_axis_value(Y_AXIS, ftostr4sign(lpos.y), blink, TERN(DWIN_MARLINUI_PORTRAIT, 95, 184), cpy));
+    TERN_(HAS_X_AXIS, _draw_axis_value(X_AXIS, ftostr41rj(lpos.x), blink, TERN(DWIN_MARLINUI_PORTRAIT,  2, 60), cpy));
+    TERN_(HAS_Y_AXIS, _draw_axis_value(Y_AXIS, ftostr41rj(lpos.y), blink, TERN(DWIN_MARLINUI_PORTRAIT, 52, 120), cpy));
   }
-  TERN_(HAS_Z_AXIS, _draw_axis_value(Z_AXIS, ftostr52sp(lpos.z), blink, TERN(DWIN_MARLINUI_PORTRAIT, 165, 300), cpy));
+  TERN_(HAS_Z_AXIS, _draw_axis_value(Z_AXIS, ftostr41rj(lpos.z), blink, TERN(DWIN_MARLINUI_PORTRAIT, 102, 180), cpy));
+
+  // A + B rotational axes
+  TERN_(HAS_A_AXIS, _draw_axis_value(I_AXIS, ftostr52(lpos.i), blink, TERN(DWIN_MARLINUI_PORTRAIT, 152, 240), cpy));
+  TERN_(HAS_B_AXIS, _draw_axis_value(J_AXIS, ftostr52(lpos.j), blink, TERN(DWIN_MARLINUI_PORTRAIT, 216, 300), cpy));
 
   // Feedrate
   static uint16_t old_fp = 0;
