@@ -39,7 +39,7 @@
 #define A_MIN_ENDSTOP_HIT_STATE HIGH   // Added by config.ini 2024-10-17 13:57:02
 #define B_MIN_ENDSTOP_HIT_STATE HIGH   // Added by config.ini 2024-10-17 13:57:02
 #define MINIMUM_PLANNER_SPEED 0.05     // Added by config.ini 2024-10-17 13:57:03
-#define SHORT_BUILD_VERSION "Globus 5-axis 1.00" // Added by config.ini 2024-10-23 14:56:28
+#define SHORT_BUILD_VERSION "Globus 5-axis 1.01" // Added by config.ini 2024-10-23 14:56:28
 #define I_AFTER_HOMING 0               // Added by config.ini 2024-10-23 15:45:11
 #define J_AFTER_HOMING 0               // Added by config.ini 2024-10-23 15:45:11
 
