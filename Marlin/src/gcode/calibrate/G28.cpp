@@ -557,6 +557,16 @@ void GcodeSuite::G28() {
         do_blocking_move_to(xy_pos_t(XY_AFTER_HOMING));
     #endif
 
+    #ifdef I_AFTER_HOMING
+      if (!axes_should_home(_BV(I_AXIS)))
+        do_blocking_move_to_i(I_AFTER_HOMING);
+    #endif
+    
+    #ifdef J_AFTER_HOMING
+      if (!axes_should_home(_BV(J_AXIS)))
+        do_blocking_move_to_j(J_AFTER_HOMING); 
+    #endif
+
     restore_feedrate_and_scaling();
 
     if (ENABLED(NANODLP_Z_SYNC) && (ENABLED(NANODLP_ALL_AXIS) || TERN0(HAS_Z_AXIS, doZ)))

@@ -39,6 +39,9 @@
 #define A_MIN_ENDSTOP_HIT_STATE HIGH   // Added by config.ini 2024-10-17 13:57:02
 #define B_MIN_ENDSTOP_HIT_STATE HIGH   // Added by config.ini 2024-10-17 13:57:02
 #define MINIMUM_PLANNER_SPEED 0.05     // Added by config.ini 2024-10-17 13:57:03
+#define SHORT_BUILD_VERSION "Globus 5-axis 1.00" // Added by config.ini 2024-10-23 14:56:28
+#define I_AFTER_HOMING 0               // Added by config.ini 2024-10-23 15:45:11
+#define J_AFTER_HOMING 0               // Added by config.ini 2024-10-23 15:45:11
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -1289,7 +1292,7 @@
  * Override with M92 (when enabled below)
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT { 80, 80, 80, 80, 80 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT { 80, 80, 400, 35.56, 35.56 }
 
 /**
  * Enable support for M92. Disable to save at least ~530 bytes of flash.
@@ -1301,7 +1304,7 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE { 300, 300, 300, 300, 300 }
+#define DEFAULT_MAX_FEEDRATE { 300, 300, 100, 1200, 1200 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1314,7 +1317,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION { 3000, 3000, 3000, 3000, 3000 }
+#define DEFAULT_MAX_ACCELERATION { 3000, 3000, 1000, 3000, 3000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1844,7 +1847,7 @@
 //#define Z_CLEARANCE_FOR_HOMING  4   // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                       // You'll need this much clearance above Z_MAX_POS to avoid grinding.
 
-//#define Z_AFTER_HOMING         10   // (mm) Height to move to after homing (if Z was homed)
+#define Z_AFTER_HOMING 10           // (mm) Height to move to after homing (if Z was homed)
 //#define XY_AFTER_HOMING { 10, 10 }  // (mm) Move to an XY position after homing (and raising Z)
 
 //#define EVENT_GCODE_AFTER_HOMING "M300 P440 S200"  // Commands to run after G28 (and move to XY_AFTER_HOMING)
@@ -2340,7 +2343,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (50*60), (50*60), (50*60) }
+#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (10*60), (20*60), (20*60) }
 
 // Edit homing feedrates with M210 and MarlinUI menu items
 //#define EDITABLE_HOMING_FEEDRATE
@@ -2421,12 +2424,12 @@
  *   M501 - Read settings from EEPROM. (i.e., Throw away unsaved changes)
  *   M502 - Revert settings to "factory" defaults. (Follow with M500 to init the EEPROM.)
  */
-//#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
+#define EEPROM_SETTINGS     // Persistent storage with M500 and M501
 //#define DISABLE_M503        // Saves ~2700 bytes of flash. Disable for release!
 #define EEPROM_CHITCHAT       // Give feedback on EEPROM commands. Disable to save flash.
 #define EEPROM_BOOT_SILENT    // Keep M503 quiet and only give errors during first load
 #if ENABLED(EEPROM_SETTINGS)
-  //#define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
+  #define EEPROM_AUTO_INIT  // Init EEPROM automatically on any errors.
   //#define EEPROM_INIT_NOW   // Init EEPROM on first boot after a new build.
 #endif
 
