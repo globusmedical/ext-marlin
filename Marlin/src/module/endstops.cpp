@@ -278,8 +278,45 @@ void Endstops::not_homing() {
     if (trigger_state())
       hit_on_purpose();
     else {
-      TERN_(SOVOL_SV06_RTS, rts.gotoPageBeep(ID_KillHome_L, ID_KillHome_D));
-      kill(GET_TEXT_F(MSG_KILL_HOMING_FAILED));
+      // Disable the steppers but keep things alive for emergency recovery if something got tangled or similar
+      // TERN_(SOVOL_SV06_RTS, rts.gotoPageBeep(ID_KillHome_L, ID_KillHome_D));
+      // kill(GET_TEXT_F(MSG_KILL_HOMING_FAILED));
+
+      // Print error message
+      SERIAL_ERROR_START();
+      SERIAL_ERROR_MSG("Homing failed! Disabling steppers but keeping system alive.");
+
+    // Check which axis is actively homing (use stepper state)
+    if (stepper.axis_is_moving(X_AXIS)) {
+      SERIAL_ERROR_MSG("X axis homing failed!");
+      stepper.disable_axis(X_AXIS);
+      set_axis_unhomed(X_AXIS);
+    }
+    else if (stepper.axis_is_moving(Y_AXIS)) {
+      SERIAL_ERROR_MSG("Y axis homing failed!");
+      stepper.disable_axis(Y_AXIS);
+      set_axis_unhomed(Y_AXIS);
+    }
+    else if (stepper.axis_is_moving(Z_AXIS)) {
+      SERIAL_ERROR_MSG("Z axis homing failed!");
+      stepper.disable_axis(Z_AXIS);
+      set_axis_unhomed(Z_AXIS);
+    }
+    #if HAS_I_AXIS
+    else if (stepper.axis_is_moving(I_AXIS)) {
+      SERIAL_ERROR_MSG("I axis homing failed!");
+      stepper.disable_axis(I_AXIS);
+      set_axis_unhomed(I_AXIS);
+    }
+    #endif
+    #if HAS_J_AXIS
+    else if (stepper.axis_is_moving(J_AXIS)) {
+      SERIAL_ERROR_MSG("J axis homing failed!");
+      stepper.disable_axis(J_AXIS);
+      set_axis_unhomed(J_AXIS);
+    }
+    #endif
+      return;  // Prevent a halt but stop further movement
     }
   }
 #endif

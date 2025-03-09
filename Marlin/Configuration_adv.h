@@ -2675,7 +2675,10 @@
  * Currently handles M108, M112, M410, M876
  * NOTE: Not yet implemented for all platforms.
  */
-//#define EMERGENCY_PARSER
+#define EMERGENCY_PARSER
+
+// Also prevent aborting on a stall event
+#define NO_SD_ABORT_ON_ENDSTOP_HIT
 
 /**
  * Realtime Reporting (requires EMERGENCY_PARSER)
